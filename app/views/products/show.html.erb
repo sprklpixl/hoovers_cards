@@ -1,6 +1,5 @@
 <% if @product %>
     <h2><%= @product.title %></h2>
-    <p><strong>Product ID:</strong> <%= @product.product_id %></p>
     <p><%= @product.image %></p>
     <p><strong>Set:</strong> <%= @product.category.name if @product.category %></p>
     <p><strong>Type:</strong> <%= @product.type %></p>
@@ -8,9 +7,9 @@
     <p><strong>Sale Price:</strong> <%= @product.sale_price %></p>
     <p><strong>Inventory:</strong> <%= @product.inventory %></p>
 
-    <%= link_to 'Back to Products', products_path %>
+    <%= link_to 'Back to Search', products_path %>
 <% else %>
   <p>Product not found.</p>
-  <%= link_to 'Back to Products', products_path %>
+  <%= link_to 'Back to Search', products_path %>
 <% end %>
 
