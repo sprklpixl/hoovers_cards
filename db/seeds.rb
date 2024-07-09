@@ -30,7 +30,7 @@ csv.each do |row|
   p.title = row['TITLE']
   p.image = row['IMAGE']
   p.category = category
-  # p.type = row['OPTION1 VALUE']
+  p.type = row['OPTION1 VALUE']
   p.price = row['PRICE']
   p.sale_price = row['SALE PRICE']
   p.inventory = row['INVENTORY'].to_i # Assuming INVENTORY column contains only integers
