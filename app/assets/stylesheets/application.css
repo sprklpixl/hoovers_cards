@@ -1,0 +1,55 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+ .erd {
+    font-family: "Courier New", Courier, monospace;
+    white-space: pre;
+    background-color: #ebebeb;
+    padding: 10px;
+    border: 1px black solid;
+    border-radius: 5px;
+    margin: 20px;
+    width: 50%;
+}
+
+nav {
+    background-color: #ebebeb;
+    padding: 10px;
+    border: 1px black solid;
+    border-radius: 5px;
+}
+
+.menu {
+    list-style-type: none; /* Remove bullets */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margins */
+    display: flex; /* Display items inline */
+    justify-content: flex-start; /* Align items to the start */
+  }
+  
+  .menu li {
+    margin-right: 20px; /* Space between menu items */
+  }
+  
+  .menu a {
+    text-decoration: none; /* Remove underline */
+    color: black; /* Default link color */
+    font-weight: bold; /* Bold text */
+  }
+  
+  .menu a:hover {
+    text-decoration: underline; /* Underline on hover */
+  }
+  
