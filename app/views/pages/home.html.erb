@@ -1,46 +1,11 @@
-<h1>Welcome to Hoovers' Cards</h1>
-<h2>Lorcana</h2>
+<div class="event-calendar">
+  <h2>Upcoming Events</h2>
+  <!-- Add your event calendar implementation here -->
+  <p>No events at the moment.</p>
+</div>
 
-<%= form_with url: search_products_path, method: :get, local: true do %>
-  <div>
-    <%= label_tag :search, 'Search for Lorcana cards:' %>
-    <%= text_field_tag :search, params[:search] %>
-  </div><br>
-
-  <div>
-    <%= label_tag :type_id, 'Filter by type:' %>
-    <%= select_tag :type_id, options_from_collection_for_select(@types, :id, :name, params[:type_id]), include_blank: true %>
-  </div><br>
-
-  <div>
-    <%= label_tag :category_id, 'Filter by set:' %>
-    <%= select_tag :category_id, options_from_collection_for_select(@categories, :id, :name, params[:category_id]), include_blank: true %>
-  </div><br>
-
-  <div>
-    <%= submit_tag 'Search' %>
-  </div><br>
-<% end %>
-
-<table>
-  <thead>
-    <tr>
-      <th>Card ID</th>
-      <th>Title</th>
-      <th>Type</th>
-      <th>Category</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @products.each do |product| %>
-      <tr>
-        <td><%= link_to product.product_id, product_path(product) %>&nbsp;</td>
-        <td><%= link_to product.title, product_path(product) %>&nbsp;</td>
-        <td><%= product.type.name if product.type %>&nbsp;</td>
-        <td><%= product.category.name if product.category %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table><br>
-
-<%= paginate @products %>
+<div class="store-locations">
+  <h2>Store Locations</h2>
+  <p>123 Lorcana Ave, Magic City</p>
+  <p>456 Card St, Deck Town</p>
+</div>
