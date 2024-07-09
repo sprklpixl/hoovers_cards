@@ -1,22 +1,33 @@
 require 'csv'
 
-# Clear the products and categories tables
+# Clear the tables
 Product.delete_all
 Category.delete_all
+Type.delete_all
 
 csv_text = File.read(Rails.root.join('lib', 'seeds', 'products-hooverscards.csv'))
 csv = CSV.parse(csv_text, headers: true, encoding: 'ISO-8859-1')
 
 categories = {}
+types = {}
 
 csv.each do |row|
   category_name = row['CATEGORIES']
+  type_name = row['OPTION1 VALUE']
 
   # Find or create the category
   category = categories[category_name] ||= Category.find_or_create_by(name: category_name)
 
   unless category.persisted?
     puts "Failed to save category: #{category.errors.full_messages.join(', ')}"
+    next
+  end
+
+  # Find or create the type
+  type = types[type_name] ||= Type.find_or_create_by(name: type_name)
+
+  unless type.persisted?
+    puts "Failed to save type: #{type.errors.full_messages.join(', ')}"
     next
   end
 
@@ -30,7 +41,7 @@ csv.each do |row|
   p.title = row['TITLE']
   p.image = row['IMAGE']
   p.category = category
-  p.type = row['OPTION1 VALUE']
+  p.type = type
   p.price = row['PRICE']
   p.sale_price = row['SALE PRICE']
   p.inventory = row['INVENTORY'].to_i # Assuming INVENTORY column contains only integers
@@ -44,3 +55,4 @@ end
 
 puts "There are now #{Product.count} rows in the products table."
 puts "There are now #{Category.count} rows in the categories table."
+puts "There are now #{Type.count} rows in the types table."

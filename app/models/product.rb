@@ -1,5 +1,6 @@
 class Product < ApplicationRecord
   belongs_to :category, optional: true
+  belongs_to :type, optional: true
 
   # Validations
   validates :product_id, presence: true
