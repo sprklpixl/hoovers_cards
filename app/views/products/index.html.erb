@@ -1,18 +1,18 @@
-<h2>Lorcana</h2>
+<h2>Shop</h2>
 
 <%= form_with url: search_products_path, method: :get, local: true do %>
   <div>
-    <%= label_tag :search, 'Search for Lorcana cards:' %>
+    <%= label_tag :search, 'Search the Store:' %>
     <%= text_field_tag :search, params[:search] %>
   </div><br>
 
   <div>
-    <%= label_tag :type_id, 'Filter by type:' %>
+    <%= label_tag :type_id, 'Filter by Type:' %>
     <%= select_tag :type_id, options_from_collection_for_select(@types, :id, :name, params[:type_id]), include_blank: true %>
   </div><br>
 
   <div>
-    <%= label_tag :category_id, 'Filter by set:' %>
+    <%= label_tag :category_id, 'Filter by Set:' %>
     <%= select_tag :category_id, options_from_collection_for_select(@categories, :id, :name, params[:category_id]), include_blank: true %>
   </div><br>
 
@@ -33,9 +33,9 @@
   <tbody>
     <% @products.each do |product| %>
       <tr>
-        <td><%= link_to product.product_id, product_path(product) %>&nbsp;</td>
-        <td><%= link_to product.title, product_path(product) %>&nbsp;</td>
-        <td><%= product.type.name if product.type %>&nbsp;</td>
+        <td><%= link_to product.product_id, products_path(product) %>    </td>
+        <td><%= link_to product.title, products_path(product) %>    </td>
+        <td><%= product.type.name if product.type %>    </td>
         <td><%= product.category.name if product.category %></td>
       </tr>
     <% end %>

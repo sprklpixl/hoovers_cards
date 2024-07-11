@@ -33,14 +33,14 @@ nav {
 
 .menu {
     list-style-type: none; /* Remove bullets */
-    padding: 0; /* Remove padding */
-    margin: 0; /* Remove margins */
+    /*padding: 0; /* Remove padding */
+    /*margin: 0; /* Remove margins */
     display: flex; /* Display items inline */
     justify-content: flex-start; /* Align items to the start */
   }
   
   .menu li {
-    margin-right: 20px; /* Space between menu items */
+    margin-right: 15px; /* Space between menu items */
   }
   
   .menu a {
