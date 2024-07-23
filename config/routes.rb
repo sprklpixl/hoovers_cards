@@ -15,13 +15,14 @@ Rails.application.routes.draw do
   # root "pages#home"
 
   # Resources for Products and Categories
-  resources :products, only: [:index, :show]
+  resources :products, only: [:index, :search]
   resources :categories, only: [:index]
 
   # Adding Search with dropdown for categories
   resources :products do
     collection do
       get 'search'
+      get 'by_category/:category_id', to: 'products#by_category', as: 'by_category'
     end
   end
 

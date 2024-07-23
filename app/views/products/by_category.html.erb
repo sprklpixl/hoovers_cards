@@ -1,0 +1,30 @@
+<%# <%= render 'layouts/menu' %>
+
+<div class="category-products">
+  <h2>Lorcana <%= @category.name %></h2>
+
+    <table>
+    <thead>
+        <tr>
+        <th>Title</th>
+        <th>Type</th>
+        <th>Price</th>
+        <th>Sale</th>
+        <th>Stock</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @products.each do |product| %>
+        <tr>
+            <td><%= link_to product.title, products_path(product) %></td>
+            <td><%= product.type.name if product.type %>
+            <td><%= product.price %></td>
+            <td><%= product.sale_price %></td>
+            <td><%= product.inventory %></td>
+        </tr>
+        <% end %>
+    </tbody>
+    </table><br>
+
+  <%= paginate @products %>
+</div>

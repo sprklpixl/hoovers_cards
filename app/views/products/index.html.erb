@@ -21,21 +21,37 @@
   </div><br>
 <% end %>
 
+<div class="category-links">
+  <h2>Categories</h2>
+  <ul>
+    <% @categories.each do |category| %>
+      <li><%= link_to category.name, by_category_products_path(category_id: category.id) %></li>
+    <% end %>
+  </ul>
+</div><br>
+
+<div class="filters">
+  <b>Filter by:</b> 
+  <%= link_to 'All', products_path %> |
+  <%= link_to 'Sale', products_path(filter: 'on_sale') %> |
+  <%= link_to 'Updated', products_path(filter: 'recently_updated') %> |
+  <%= link_to 'New', products_path(filter: 'recently_added') %>
+</div><br>
 <table>
   <thead>
     <tr>
-      <th>Card ID</th>
       <th>Title</th>
       <th>Type</th>
+      <th>Price</th>
       <th>Category</th>
     </tr>
   </thead>
   <tbody>
     <% @products.each do |product| %>
       <tr>
-        <td><%= link_to product.product_id, products_path(product) %>    </td>
-        <td><%= link_to product.title, products_path(product) %>    </td>
-        <td><%= product.type.name if product.type %>    </td>
+        <td><%= link_to product.title, products_path(product) %></td>
+        <td><%= product.type.name if product.type %></td>
+        <td><%= product.price %></td>
         <td><%= product.category.name if product.category %></td>
       </tr>
     <% end %>
