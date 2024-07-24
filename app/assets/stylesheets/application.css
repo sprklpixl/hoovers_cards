@@ -53,3 +53,6 @@ nav {
     text-decoration: underline; /* Underline on hover */
   }
   
+  td, th {
+    padding: 3px 15px 3px 15px;
+  }
