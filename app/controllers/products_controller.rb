@@ -42,7 +42,7 @@ class ProductsController < ApplicationController
 
     render :index
   end
-  
+
   def by_category
     @category = Category.find(params[:category_id])
     @products = @category.products.page(params[:page]).per(10)
