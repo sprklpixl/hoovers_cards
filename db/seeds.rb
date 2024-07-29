@@ -56,3 +56,4 @@ end
 puts "There are now #{Product.count} rows in the products table."
 puts "There are now #{Category.count} rows in the categories table."
 puts "There are now #{Type.count} rows in the types table."
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
