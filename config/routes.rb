@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  # get 'products/index'
-  # get 'products/show'
-  # Define routes for the Home and About pages
+
+  # Define routes for the Home, About, and Contact pages
   get 'home', to: 'pages#home'
   get 'about', to: 'pages#about'
+  get 'contact', to: 'pages#contact'
   #get 'index', to: 'pages#index' # Add this line for the index page
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
-  # root "pages#home"
+  root 'pages#home'
 
   # Resources for Products and Categories
   resources :products, only: [:index, :search]
@@ -28,8 +28,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :categories, only: [:index, :show]
+  resources :categories, only: [:index, :search]
 
-  root 'pages#home'
-  get 'about', to: 'pages#about'
 end

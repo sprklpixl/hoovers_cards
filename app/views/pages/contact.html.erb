@@ -1,0 +1,12 @@
+<h2><%= @contact.title %></h2>
+<p><%= @contact.content %></p>
+<p><%= link_to 'View on Google Maps', "https://www.google.com/maps?q=#{CGI.escape(@contact.address)}", target: "_blank" %></p>
+<p><%= mail_to "tel:#{@contact.phone}", @contact.phone %></p>
+<p><%= mail_to @contact.email %></p>
+<p><%= link_to 'Facebook', @contact.facebook, target: '_blank' %> |
+    <%= link_to 'X', @contact.twitter, target: '_blank' %> |
+    <%= link_to 'Instagram', @contact.instagram, target: '_blank' %> |
+    <%= link_to 'TikTok', @contact.tiktok, target: '_blank' %> |
+    <%= link_to 'SnapChat', @contact.snapchat, target: '_blank' %></p>
+
+<%# <%= link_to 'Back', root_path %>
