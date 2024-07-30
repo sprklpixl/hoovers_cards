@@ -7,6 +7,8 @@ class Product < ApplicationRecord
   validates :title, presence: true
   # validates :price, numericality: { greater_than_or_equal_to: 0 }
 
+  has_one_attached :image
+
   def self.ransackable_associations(auth_object = nil)
     ["category", "type"]
   end

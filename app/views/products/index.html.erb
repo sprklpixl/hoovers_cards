@@ -33,9 +33,9 @@
 <div class="filters">
   <b>Filter by:</b> 
   <%= link_to 'All', products_path %> |
-  <%= link_to 'Sale', products_path(filter: 'on_sale') %> |
+  <%= link_to 'New', products_path(filter: 'recently_added') %> |
   <%= link_to 'Updated', products_path(filter: 'recently_updated') %> |
-  <%= link_to 'New', products_path(filter: 'recently_added') %>
+  <%= link_to 'Sale', products_path(filter: 'on_sale') %>
 </div><br>
 <table>
   <thead>
@@ -49,7 +49,7 @@
   <tbody>
     <% @products.each do |product| %>
       <tr>
-        <td><%= link_to product.title, products_path(product) %></td>
+        <td><%= link_to product.title, product_path(product) %></td>
         <td><%= product.type.name if product.type %></td>
         <td><%= product.price %></td>
         <td><%= product.category.name if product.category %></td>
