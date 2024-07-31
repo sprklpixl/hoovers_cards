@@ -1,4 +1,5 @@
 require 'csv'
+require 'open-uri'
 
 # Clear the tables
 Product.delete_all
@@ -32,14 +33,13 @@ csv.each do |row|
   end
 
   # Extracting integer part from SKU column
-  sku_text = row['SKU']
-  sku_integer = sku_text.scan(/\d+/).join.to_i
+  #sku_text = row['SKU']
+  #sku_integer = sku_text.scan(/\d+/).join.to_i
 
   # Create a new product
   p = Product.new
-  p.product_id = "#{row['PRODUCT ID']}#{sku_integer}" # Concatenating PRODUCT ID and integer part of SKU
+  p.product_id = "#{row['PRODUCT ID']}" #{sku_integer} # Concatenating PRODUCT ID and integer part of SKU
   p.title = row['TITLE']
-  p.image = row['IMAGE']
   p.category = category
   p.type = type
   p.price = row['PRICE']
@@ -47,7 +47,18 @@ csv.each do |row|
   p.inventory = row['INVENTORY'].to_i # Assuming INVENTORY column contains only integers
 
   if p.save
-    puts "#{p.product_id} saved"
+    if row['IMAGE'].present?
+      begin
+        image_url = row['IMAGE']
+        downloaded_image = URI.open(image_url)
+        p.image.attach(io: downloaded_image, filename: File.basename(URI.parse(image_url).path))
+        puts "#{p.product_id} saved with image"
+      rescue => e
+        puts "Failed to attach image for #{p.product_id}: #{e.message}"
+      end
+    else
+      puts "#{p.product_id} saved without image"
+    end
   else
     puts "Failed to save product: #{p.errors.full_messages.join(', ')}"
   end
@@ -56,4 +67,4 @@ end
 puts "There are now #{Product.count} rows in the products table."
 puts "There are now #{Category.count} rows in the categories table."
 puts "There are now #{Type.count} rows in the types table."
-AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+# AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
