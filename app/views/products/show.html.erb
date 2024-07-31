@@ -1,25 +1,37 @@
 <% if @product %>
-  <h1><%= @product.title %></h1>
-  <p><%= @product.content %></p>
+  <h2><%= @product.title %></h2>
+  
+  <% if @product.image.attached? %>
+    <%= image_tag @product.image %>
+  <% end %>
+
   <p>Price: <%= number_to_currency(@product.price) %></p>
 
   <% if @product.sale_price.present? %>
     <p>Sale Price: <%= number_to_currency(@product.sale_price) %></p>
   <% end %>
 
-  <% if @product.image.attached? %>
-    <%= image_tag @product.image %>
-  <% end %>
-
-  <%= form_with url: order_path, method: :post do |f| %>
+  <%# <%= form_with url: order_path, method: :post do |f| %>
     <div>
-      <%= label_tag :type, 'Please select one:' %>
-      <%= select_tag :type, options_from_collection_for_select(@product.types, :id, :name) %>
+      <%= label_tag :type, 'Choose a type:' %>
+      <% @product.types.each do |type| %>
+        <div>
+          <%= radio_button_tag :type, type.id %>
+          <%= label_tag :type, type.name %>
+        </div>
+      <% end %>
     </div>
 
     <div>
-      <%= f.submit 'Add to Cart' %>
+      <%= label_tag :quantity, 'Quantity:' %>
+      <%= number_field_tag :quantity, 1, min: 1 %>
+    </div>
+
+    <div>
+      <%# <%= f.submit 'Add to Cart' %>
     </div><br><br>
+  <%# <% end %>
+  
     <%= link_to 'Back to Shop', products_path %>
 <% else %>
   <p>Product not found.</p>

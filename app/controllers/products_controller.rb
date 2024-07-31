@@ -3,7 +3,7 @@ class ProductsController < ApplicationController
     # @products = Product.all
     @products = Product.page(params[:page]).per(10)
     @categories = Category.all
-    @types = Type.all
+    #@types = Type.all
 
     if params[:filter] == 'on_sale'
       @products = @products.on_sale
@@ -24,15 +24,15 @@ class ProductsController < ApplicationController
   def search
     @categories = Category.all
     @products = Product.all
-    @types = Type.all
+    #@types = Type.all
 
     if params[:search].present?
       @products = @products.where('title LIKE ?', "%#{params[:search]}%")
     end
 
-    if params[:type_id].present?
-      @products = @products.where(type_id: params[:type_id])
-    end
+    # if params[:type_id].present?
+    #   @products = @products.where(type_id: params[:type_id])
+    # end
 
     if params[:category_id].present?
       @products = @products.where(category_id: params[:category_id])

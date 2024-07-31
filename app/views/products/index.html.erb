@@ -6,10 +6,10 @@
     <%= text_field_tag :search, params[:search] %>
   </div><br>
 
-  <div>
+  <%# <div>
     <%= label_tag :type_id, 'Filter by Type:' %>
-    <%= select_tag :type_id, options_from_collection_for_select(@types, :id, :name, params[:type_id]), include_blank: true %>
-  </div><br>
+    <%# <%= select_tag :type_id, options_from_collection_for_select(@types, :id, :name, params[:type_id]), include_blank: true %>
+  <%# </div><br>  %>
 
   <div>
     <%= label_tag :category_id, 'Filter by Set:' %>
@@ -41,8 +41,8 @@
   <thead>
     <tr>
       <th>Title</th>
-      <th>Type</th>
       <th>Price</th>
+      <th>Stock</th>
       <th>Category</th>
     </tr>
   </thead>
@@ -50,8 +50,8 @@
     <% @products.each do |product| %>
       <tr>
         <td><%= link_to product.title, product_path(product) %></td>
-        <td><%= product.type.name if product.type %></td>
         <td><%= product.price %></td>
+        <td><%= product.inventory %></td>
         <td><%= product.category.name if product.category %></td>
       </tr>
     <% end %>

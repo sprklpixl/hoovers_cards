@@ -3,13 +3,13 @@ ActiveAdmin.register Product do
   # See permitted parameters documentation:
   # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
   #
-  permit_params :product_id, :title, :content, :price, :sale_price, :inventory, :category_id, :type_id, :image, type_attributes: [:id, :name, :_destroy]
+  permit_params :product_id, :title, :price, :sale_price, :inventory, :category_id, :image, types_attributes: [:id, :name, :_destroy]
 
   form do |f|
     f.inputs 'Product Details' do
       f.input :product_id
       f.input :title
-      f.input :content
+      # f.input :content
       f.input :price
       f.input :sale_price
       f.input :inventory
@@ -44,7 +44,7 @@ ActiveAdmin.register Product do
     attributes_table do
       row :product_id
       row :title
-      row :content
+      # row :content
       row :price
       row :sale_price
       row :inventory

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_31_182319) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_31_190945) do
   create_table "abouts", force: :cascade do |t|
     t.string "title"
     t.text "content"
@@ -105,17 +105,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_31_182319) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "category_id"
-    t.integer "type_id"
-    t.index ["type_id"], name: "index_products_on_type_id"
   end
 
   create_table "types", force: :cascade do |t|
     t.string "name"
+    t.integer "product_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_types_on_product_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "products", "types"
+  add_foreign_key "types", "products"
 end

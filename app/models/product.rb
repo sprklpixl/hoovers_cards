@@ -11,11 +11,11 @@ class Product < ApplicationRecord
   # validates :price, numericality: { greater_than_or_equal_to: 0 }
 
   def self.ransackable_associations(auth_object = nil)
-    ["category", "type"]
+    ["category"]
   end
 
   def self.ransackable_attributes(auth_object = nil)
-    ["category", "category_id", "created_at", "id", "id_value", "image", "inventory", "price", "product_id", "sale_price", "title", "type", "type_id", "updated_at"]
+    ["category", "category_id", "created_at", "id", "id_value", "image", "inventory", "price", "product_id", "sale_price", "title", "updated_at"]
   end
 
   scope :on_sale, -> { where.not(sale_price: nil) }
