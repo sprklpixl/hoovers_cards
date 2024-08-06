@@ -50,7 +50,9 @@ ActiveAdmin.register Product do
       row :inventory
       row :category
       row :image do |product|
-        image_tag url_for(product.image) if product.image.attached?
+        if product.image.attached?
+          image_tag url_for(product.image), size: "300x425"
+        end
       end
       row :created_at
       row :updated_at
@@ -62,4 +64,6 @@ ActiveAdmin.register Product do
       end
     end
   end
+
+  filter :image_attachment_id
 end
