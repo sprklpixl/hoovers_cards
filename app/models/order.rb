@@ -3,6 +3,6 @@ class Order < ApplicationRecord
   has_many :order_items, dependent: :destroy
 
   def total_price
-    order_items.sum { |item| item.quantity * item.price }
+    order_items.to_a.sum { |item| item.total_price }
   end
 end

@@ -10,7 +10,7 @@ csv_text = File.read(Rails.root.join('lib', 'seeds', 'products-hooverscards.csv'
 csv = CSV.parse(csv_text, headers: true, encoding: 'ISO-8859-1')
 
 categories = {}
-#types = {}
+# types = {}
 
 csv.each do |row|
   category_name = row['CATEGORIES']
@@ -24,14 +24,6 @@ csv.each do |row|
     next
   end
 
-  # Find or create the type
-  # type = types[type_name] ||= Type.find_or_create_by(name: type_name)
-
-  # unless type.persisted?
-  #   puts "Failed to save type: #{type.errors.full_messages.join(', ')}"
-  #   next
-  # end
-
   # Extracting integer part from SKU column
   #sku_text = row['SKU']
   #sku_integer = sku_text.scan(/\d+/).join.to_i
@@ -41,7 +33,13 @@ csv.each do |row|
 
   # Skip if product_id already exists
   if Product.exists?(product_id: product_id)
-    puts "Product with product_id #{product_id} already exists. Skipping..."
+    # puts "Product with product_id #{product_id} already exists. Skipping..."
+    # Find or create the type
+    # type = types[:type_id] ||= Type.find_or_create_by(id: :type_id)
+
+    # unless type.persisted?
+    #   puts "Failed to save type: #{type.errors.full_messages.join(', ')}"
+    # end
     next
   end
 
@@ -50,10 +48,13 @@ csv.each do |row|
   p.product_id = product_id
   p.title = row['TITLE']
   p.category = category
-  #p.type = row['OPTION1 VALUE']
+  # p.type = type
   p.price = row['PRICE']
   p.sale_price = row['SALE PRICE']
   p.inventory = row['INVENTORY'].to_i # Assuming INVENTORY column contains only integers
+
+# Figure out how to add types from csv when seeding to save time and make testing easier
+
 
   if p.save
     if row['IMAGE'].present?
@@ -76,4 +77,4 @@ end
 puts "There are now #{Product.count} rows in the products table."
 puts "There are now #{Category.count} rows in the categories table."
 #puts "There are now #{Type.count} rows in the types table."
-AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+# AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?

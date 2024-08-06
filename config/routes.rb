@@ -35,10 +35,32 @@ Rails.application.routes.draw do
   resources :categories, only: [:index, :search]
 
   # Adding Cart and Order routes
-  resource :cart, only: [:show] do
-    post 'add_item', to: 'carts#add_item'
-    delete 'remove_item', to: 'carts#remove_item'
+  # resource :cart, only: [:show] do
+  #   post 'add_item', to: 'carts#add_item'
+  #   delete 'remove_item', to: 'carts#remove_item'
+  # end
+
+  # resources :orders, only: [:new, :create, :show]
+
+  resources :products do
+    member do
+      post 'add_to_cart', to: 'carts#add_item'
+    end
   end
 
-  resources :orders, only: [:new, :create, :show]
+  resource :cart, only: [:show] do
+    collection do
+      patch :update_item
+      delete :remove_item
+    end
+  end
+
+  resources :orders, only: [:new, :create, :show, :index]
+
+  namespace :admin do
+    resources :products
+    resources :types
+    resources :users
+    resources :orders
+  end
 end
