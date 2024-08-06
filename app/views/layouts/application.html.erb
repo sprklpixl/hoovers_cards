@@ -17,6 +17,14 @@
       <li><%= link_to 'Shop', products_path %></li>
       <li><%= link_to 'About', about_path %></li>
       <li><%= link_to 'Contact', contact_path %></li>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <% if user_signed_in? %>
+        <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
+        <li><%= link_to 'Edit profile', edit_user_registration_path %></li>
+      <% else %>
+        <li><%= link_to 'Sign up', new_user_registration_path %></li>
+        <li><%= link_to 'Login', new_user_session_path %></li>
+      <% end %>
     </nav>
     <h1>Hoovers' Cards</h1>
   </header>
