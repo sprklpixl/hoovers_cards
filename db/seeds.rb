@@ -76,7 +76,15 @@
 # puts "There are now #{Product.count} rows in the products table."
 # puts "There are now #{Category.count} rows in the categories table."
 # #puts "There are now #{Type.count} rows in the types table."
-# AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+Spree::User.create!(email: 'user@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+
+if Rails.env.development?
+  admin_role = Spree::Role.find_or_create_by(name: 'admin')
+  user = Spree::User.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
+  user.spree_roles << admin_role
+  user.save!
+end
+
 Spree::Core::Engine.load_seed
 Spree::Auth::Engine.load_seed
 
