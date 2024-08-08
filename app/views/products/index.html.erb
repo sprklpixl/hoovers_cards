@@ -1,61 +1,19 @@
-<h2>Shop</h2>
-
-<%= form_with url: search_products_path, method: :get, local: true do %>
-  <div>
-    <%= label_tag :search, 'Search the Store:' %>
-    <%= text_field_tag :search, params[:search] %>
-  </div><br>
-
-  <%# <div>
-    <%= label_tag :type_id, 'Filter by Type:' %>
-    <%# <%= select_tag :type_id, options_from_collection_for_select(@types, :id, :name, params[:type_id]), include_blank: true %>
-  <%# </div><br>  %>
-
-  <div>
-    <%= label_tag :category_id, 'Filter by Set:' %>
-    <%= select_tag :category_id, options_from_collection_for_select(@categories, :id, :name, params[:category_id]), include_blank: true %>
-  </div><br>
-
-  <div>
-    <%= submit_tag 'Search' %>
-  </div><br>
-<% end %>
-
-<div class="category-links">
-  <h2>Categories</h2>
-  <ul>
-    <% @categories.each do |category| %>
-      <li><%= link_to category.name, by_category_products_path(category_id: category.id) %></li>
+<div class="products wrapper grid-container gap-7 mt-8 mb-20">
+  <aside class="col-span-full m-0 md:col-span-3 lg:col-span-2">
+    <% if "products" == params[:controller] && @taxon %>
+      <%= render 'shared/search/filters', taxon: @taxon %>
+    <% else %>
+      <%= render 'shared/navigation/taxonomies', taxon: @taxon %>
+      <%= render 'shared/search/filters', taxon: @taxon %>
     <% end %>
-  </ul>
-</div><br>
-
-<div class="filters">
-  <b>Filter by:</b> 
-  <%= link_to 'All', products_path %> |
-  <%= link_to 'New', products_path(filter: 'recently_added') %> |
-  <%= link_to 'Updated', products_path(filter: 'recently_updated') %> |
-  <%= link_to 'Sale', products_path(filter: 'on_sale') %>
-</div><br>
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Price</th>
-      <th>Stock</th>
-      <th>Category</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @products.each do |product| %>
-      <tr>
-        <td><%= link_to product.title, product_path(product) %></td>
-        <td><%= product.price %></td>
-        <td><%= product.inventory %></td>
-        <td><%= product.category.name if product.category %></td>
-      </tr>
+  </aside>
+  <section class="products_section col-span-full md:col-span-9 lg:col-span-10">
+    <% if params[:keywords] && @products.empty? %>
+      <h6>
+        <%= t('spree.no_products_found') %>
+      </h6>
+    <% else %>
+      <%= render 'products', products: @products, taxon: @taxon %>
     <% end %>
-  </tbody>
-</table><br>
-
-<%= paginate @products %>
+  </section>
+</div>

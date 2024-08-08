@@ -1,50 +1,54 @@
-class ProductsController < ApplicationController
-  def index
-    # @products = Product.all
-    @products = Product.page(params[:page]).per(10)
-    @categories = Category.all
-    #@types = Type.all
+# frozen_string_literal: true
 
-    if params[:filter] == 'on_sale'
-      @products = @products.on_sale
-    elsif params[:filter] == 'recently_updated'
-      @products = @products.recently_updated.where.not(id: Product.recently_added.select(:id))
-    elsif params[:filter] == 'recently_added'
-      @products = @products.recently_added
-    end
+class ProductsController < StoreController
+  before_action :load_product, only: :show
+  before_action :load_taxon, only: :index
+
+  helper 'spree/products', 'spree/taxons', 'taxon_filters'
+
+  respond_to :html
+
+  rescue_from Spree::Config.searcher_class::InvalidOptions do |error|
+    raise ActionController::BadRequest.new, error.message
+  end
+
+  def index
+    @searcher = build_searcher(params.merge(include_images: true))
+    @products = @searcher.retrieve_products
   end
 
   def show
-    @product = Product.find_by(id: params[:id])
-  rescue ActiveRecord::RecordNotFound
-    flash[:alert] = "Product not found."
-    redirect_to products_path
+    @variants = @product.
+      variants_including_master.
+      display_includes.
+      with_prices(current_pricing_options).
+      includes([:option_values, :images])
+
+    @product_properties = @product.product_properties.includes(:property)
+    @taxon = Spree::Taxon.find(params[:taxon_id]) if params[:taxon_id]
+    @similar_products = @product.similar_products
   end
 
-  def search
-    @categories = Category.all
-    @products = Product.all
-    #@types = Type.all
+  private
 
-    if params[:search].present?
-      @products = @products.where('title LIKE ?', "%#{params[:search]}%")
+  def accurate_title
+    if @product
+      @product.meta_title.blank? ? @product.name : @product.meta_title
+    else
+      super
     end
-
-    # if params[:type_id].present?
-    #   @products = @products.where(type_id: params[:type_id])
-    # end
-
-    if params[:category_id].present?
-      @products = @products.where(category_id: params[:category_id])
-    end
-
-    @products = @products.page(params[:page]).per(10)
-
-    render :index
   end
 
-  def by_category
-    @category = Category.find(params[:category_id])
-    @products = @category.products.page(params[:page]).per(10)
+  def load_product
+    if spree_current_user.try(:has_spree_role?, "admin")
+      @products = Spree::Product.with_discarded
+    else
+      @products = Spree::Product.available
+    end
+    @product = @products.friendly.find(params[:id])
+  end
+
+  def load_taxon
+    @taxon = Spree::Taxon.find(params[:taxon]) if params[:taxon].present?
   end
 end

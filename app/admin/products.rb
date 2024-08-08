@@ -1,12 +1,13 @@
-ActiveAdmin.register Product do
+ActiveAdmin.register Spree::Product do
 
   # See permitted parameters documentation:
   # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
   #
-  permit_params :product_id, :title, :price, :sale_price, :inventory, :category_id, :image, types_attributes: [:id, :name, :_destroy]
+  permit_params :name, :description, :price, :available_on, :sku, :shipping_category_id, variants_attributes: [:id, :sku, :price, :_destroy]
+
 
   form do |f|
-    f.inputs 'Product Details' do
+    f.inputs 'Details' do
       f.input :product_id
       f.input :title
       # f.input :content
